@@ -26,7 +26,9 @@ func runGenerate(text string, nameFile string, l string) {
 
 	req, _ := http.NewRequest("POST", url, payload)
 
-	req.Header.Add("xi-api-key", "ef1b08266ff0440ea363bad990a0e599")
+	xi_api_key := os.Getenv("XI_API_KEY")
+
+	req.Header.Add("xi-api-key", xi_api_key)
 	req.Header.Add("Content-Type", "application/json")
 
 	res, err := http.DefaultClient.Do(req)
