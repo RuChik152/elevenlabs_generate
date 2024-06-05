@@ -60,8 +60,6 @@ func runGenerate(text string, nameFile string, l string) {
 			return
 		}
 
-		// Сохранение аудио в файл
-		//fileName := "output.mp3"
 		fileName := fmt.Sprintf(".\\output\\%s\\%s.mp3", l, nameFile)
 		err = os.WriteFile(fileName, body, 0644)
 		if err != nil {
