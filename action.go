@@ -3,14 +3,22 @@ package main
 import (
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"regexp"
 	"strings"
 )
 
-func runGenerate(text string, nameFile string) {
-	url := "https://api.elevenlabs.io/v1/text-to-speech/WuLq5z7nEcrhppO0ZQJw?enable_logging=true&output_format=mp3_22050_32"
+func runGenerate(text string, nameFile string, l string) {
+
+	var url string
+
+	if lang, err := getLangID(l); err != nil {
+		log.Fatal(err)
+	} else {
+		url = fmt.Sprintf("https://api.elevenlabs.io/v1/text-to-speech/%s?enable_logging=true&output_format=mp3_22050_32", lang)
+	}
 
 	dataRequest := fmt.Sprintf("{\n  \"text\": \"%s\",\n  \"model_id\": \"eleven_multilingual_v2\",\n  \"voice_settings\": {\n    \"similarity_boost\": 0.75,\n    \"style\": 0.25,\n    \"use_speaker_boost\": true,\n    \"stability\": 0.5\n  }\n}", sanitizeInput(text))
 
@@ -52,7 +60,7 @@ func runGenerate(text string, nameFile string) {
 
 		// Сохранение аудио в файл
 		//fileName := "output.mp3"
-		fileName := fmt.Sprintf(".\\output\\%s.mp3", nameFile)
+		fileName := fmt.Sprintf(".\\output\\%s\\%s.mp3", l, nameFile)
 		err = os.WriteFile(fileName, body, 0644)
 		if err != nil {
 			fmt.Println("Error:", err)
@@ -71,4 +79,23 @@ func sanitizeInput(text string) string {
 	text = re.ReplaceAllString(text, "")
 	fmt.Println("Выходная строка: ", text)
 	return text
+}
+
+type langID string
+
+func getLangID(lang string) (langID, error) {
+	switch lang {
+	case "CHN":
+		return langID(os.Getenv("SPEAKER_CHN_ID")), nil
+	case "ENG":
+		return langID(os.Getenv("SPEAKER_ENG_ID")), nil
+	case "FR":
+		return langID(os.Getenv("SPEAKER_FR_ID")), nil
+	case "ESP":
+		return langID(os.Getenv("SPEAKER_ESP_ID")), nil
+	case "ARAB":
+		return langID(os.Getenv("SPEAKER_ARAB_ID")), nil
+	default:
+		return "", fmt.Errorf("lang not found")
+	}
 }

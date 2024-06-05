@@ -4,15 +4,16 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 	"sync"
 )
 
-func parseData(path string) {
+func parseData(path string, lang string) {
 
 	var wg sync.WaitGroup
 	var list map[string]string
 
-	file, err := os.ReadFile(path)
+	file, err := os.ReadFile(filepath.Join(".", "lang", path))
 	if err != nil {
 		fmt.Println("Err: ", err)
 		return
@@ -23,18 +24,16 @@ func parseData(path string) {
 		fmt.Println("Err: ", err)
 	}
 
-	//fmt.Println(list)
-
 	semaphore := make(chan struct{}, 2)
 	for i, v := range list {
-		//fmt.Printf("Index: %s - Value: %s\n", i, v)
+
 		wg.Add(1)
 		semaphore <- struct{}{}
 
 		go func(v string, i string) {
 			defer wg.Done()
 			defer func() { <-semaphore }()
-			runGenerate(v, i)
+			runGenerate(v, i, lang)
 		}(v, i)
 	}
 
