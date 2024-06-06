@@ -45,7 +45,7 @@ func runGenerate(text string, nameFile string, l string) {
 			return
 		}
 
-		fileName := fmt.Sprintf(".\\output\\%s.json", nameFile)
+		fileName := fmt.Sprintf(".\\error\\%s\\%s.json", l, nameFile)
 		err = os.WriteFile(fileName, body, 0644)
 		if err != nil {
 			fmt.Println("Error:", err)
