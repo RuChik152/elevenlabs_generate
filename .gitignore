@@ -1,5 +1,4 @@
-/output/**
-!/output/**/
+lang/*.json
+output/**/*.mp3
 .env
-/lang/*
-/error/*
+
