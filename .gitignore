@@ -1,3 +1,5 @@
-/output
+/output/**
 !/output/**/
 .env
+/lang/*
+/error/*

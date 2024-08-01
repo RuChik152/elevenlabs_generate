@@ -9,10 +9,15 @@ import (
 
 var langList map[string]string = map[string]string{
 	//"CHN":  "resource_map_CHN.json",
-	"ENG":  "resource_map_ENG.json",
-	"FR":   "resource_map_FR.json",
-	"ESP":  "resource_map_ESP.json",
-	"ARAB": "resource_map_ARAB.json",
+	//"ENG":  "resource_map_ENG.json",
+	//"FR":   "resource_map_FR.json",
+	//"ESP":  "resource_map_ESP.json",
+	//"ARAB": "resource_map_ARAB.json",
+	"CHN":  "new_com_CHN.json",
+	"ENG":  "new_com_ENG.json",
+	"FR":   "new_com_FR.json",
+	"ESP":  "new_com_ESP.json",
+	"ARAB": "new_com_ARAB.json",
 }
 
 func init() {
@@ -24,8 +29,6 @@ func init() {
 
 func main() {
 	runner()
-	//parseData(".\\lang\\resource_map_ARAB.json", "ARAB")
-	//runGenerate("要打开这扇门，您需要在KargaVR.com激活您朋友的傀儡 <color=orange>在您完成此教程之前</color>。\r\n\r\n在这扇门后面有一个礼物送给你们两个：傀儡的动力包。\r\n\r\n剩余级别: ", "ACTV_CAVE_LVL")
 }
 
 func runner() {

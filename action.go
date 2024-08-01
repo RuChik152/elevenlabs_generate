@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path"
 	"regexp"
 	"strings"
 )
@@ -45,7 +46,10 @@ func runGenerate(text string, nameFile string, l string) {
 			return
 		}
 
-		fileName := fmt.Sprintf(".\\error\\%s\\%s.json", l, nameFile)
+		// fileName := fmt.Sprintf(".\\error\\%s\\%s.json", l, nameFile)
+		fileName := path.Join(".", "error", l, fmt.Sprintf("%s.json", nameFile))
+		//path.Join(".", "error", l, fmt.Sprintf("%s.json", nameFile))
+
 		err = os.WriteFile(fileName, body, 0644)
 		if err != nil {
 			fmt.Println("Error:", err)
@@ -60,7 +64,10 @@ func runGenerate(text string, nameFile string, l string) {
 			return
 		}
 
-		fileName := fmt.Sprintf(".\\output\\%s\\%s.mp3", l, nameFile)
+		//fileName := fmt.Sprintf(".\\output\\%s\\%s.mp3", l, nameFile)
+		fileName := path.Join(".", "output", l, fmt.Sprintf("%s.mp3", nameFile))
+		//path.Join(".", "output", l, fmt.Sprintf("%s.mp3", nameFile))
+
 		err = os.WriteFile(fileName, body, 0644)
 		if err != nil {
 			fmt.Println("Error:", err)
