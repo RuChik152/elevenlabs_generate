@@ -46,9 +46,7 @@ func runGenerate(text string, nameFile string, l string) {
 			return
 		}
 
-		// fileName := fmt.Sprintf(".\\error\\%s\\%s.json", l, nameFile)
 		fileName := path.Join(".", "error", l, fmt.Sprintf("%s.json", nameFile))
-		//path.Join(".", "error", l, fmt.Sprintf("%s.json", nameFile))
 
 		err = os.WriteFile(fileName, body, 0644)
 		if err != nil {
@@ -64,9 +62,7 @@ func runGenerate(text string, nameFile string, l string) {
 			return
 		}
 
-		//fileName := fmt.Sprintf(".\\output\\%s\\%s.mp3", l, nameFile)
 		fileName := path.Join(".", "output", l, fmt.Sprintf("%s.mp3", nameFile))
-		//path.Join(".", "output", l, fmt.Sprintf("%s.mp3", nameFile))
 
 		err = os.WriteFile(fileName, body, 0644)
 		if err != nil {
@@ -74,7 +70,7 @@ func runGenerate(text string, nameFile string, l string) {
 			return
 		}
 
-		fmt.Println("Аудио успешно сохранено в файл:", fileName)
+		fmt.Println("Audio successfully saved to file: ", fileName)
 	}
 
 }
@@ -84,7 +80,7 @@ func sanitizeInput(text string) string {
 	text = strings.ReplaceAll(text, "\n", "")
 	re := regexp.MustCompile(`<color[^>]*>|</color>`)
 	text = re.ReplaceAllString(text, "")
-	fmt.Println("Выходная строка: ", text)
+	fmt.Println("Output line:", text)
 	return text
 }
 

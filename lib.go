@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-var langList map[string]string
+var langList = make(map[string]string, 0)
 
 func getJson() {
 	files, err := os.ReadDir("./lang")
@@ -24,17 +24,15 @@ func getJson() {
 		name := files[i].Name()
 
 		if re.MatchString(name) {
-			log.Println("Соотвествует", name)
 
-			log.Printf("%q\n", reName.FindString(name))
-			log.Println(strings.ReplaceAll(reName.FindString(name), "_", ""))
+			langName := strings.ReplaceAll(reName.FindString(name), "_", "")
+			createDir(langName)
 
-			createDir(strings.ReplaceAll(reName.FindString(name), "_", ""))
+			log.Printf("file %s defined for %s language\n", langName, name)
 
-		} else {
-			log.Println("Не соотвествует", name)
+			langList[langName] = name
+
 		}
-
 	}
 
 }
@@ -61,11 +59,6 @@ func createDir(nameDir string) {
 		"error",
 		"output",
 	}
-
-	// path := path.Join(".", "error", nameDir)
-	// if err := os.Mkdir(path, 0750); err != nil {
-	// 	log.Fatalln(err)
-	// }
 
 	for i := 0; i < len(list); i++ {
 		path := path.Join(".", list[i], nameDir)
